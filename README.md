@@ -1,5 +1,7 @@
 # fishbulb
 
+[![Build Status](https://travis-ci.com/zachdlang/fishbulb.svg?branch=master)](https://travis-ci.com/zachdlang/fishbulb)
+
 ## Service Setup
 1. Copy the service files, so Gunicorn can be automatically started & reloaded.
 	
