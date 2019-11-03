@@ -1,0 +1,12 @@
+[Unit]
+Description=fishbulb
+After=network.target
+
+[Service]
+User=www-data
+Restart=on-failure
+WorkingDirectory=/var/www/fishbulb/
+ExecStart=/usr/local/bin/gunicorn -c /var/www/fishbulb/gunicorn.conf web:app
+
+[Install]
+WantedBy=multi-user.target
