@@ -13,4 +13,4 @@ install:
 jobs:
   include:
     - stage: test
-      script: pytest
+      script: ./.travis/create-test-config.sh && pytest
