@@ -1,3 +1,4 @@
 web/__pycache__/
 fishbulb.db
+web/config.py
 .venv

@@ -1,5 +1,18 @@
+# Third party imports
 from flask import Flask, jsonify, Response
-from web import database
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
+# Local imports
+from web import config, database
+
+if not hasattr(config, 'TESTMODE'):
+	sentry_sdk.init(
+		dsn=config.SENTRY_DSN,
+		integrations=[
+			FlaskIntegration(),
+		]
+	)
 
 app = Flask(__name__)
 
