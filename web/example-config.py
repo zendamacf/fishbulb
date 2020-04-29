@@ -1,1 +1,1 @@
-SENTRY_DSN = 'sentrydsn'
+ROLLBAR_TOKEN = 'rollbartoken'

@@ -1,20 +1,25 @@
 # Third party imports
-from flask import Flask, jsonify, Response
-import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
+from flask import Flask, jsonify, Response, got_request_exception
+import rollbar
+import rollbar.contrib.flask
 
 # Local imports
 from web import config, database
 
-if not hasattr(config, 'TESTMODE'):
-	sentry_sdk.init(
-		dsn=config.SENTRY_DSN,
-		integrations=[
-			FlaskIntegration(),
-		]
-	)
-
 app = Flask(__name__)
+
+
+@app.before_first_request
+def init_rollbar():
+	if not hasattr(config, 'TESTMODE'):
+		env = 'production' if not hasattr(config, 'TESTMODE') else 'development'
+		rollbar.init(
+			config.ROLLBAR_TOKEN,
+			environment=env
+		)
+
+		# send exceptions from `app` to rollbar, using flask's signal system.
+		got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
 
 @app.route('/ping')
